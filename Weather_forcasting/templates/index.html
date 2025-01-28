@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Forecasting</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: sans-serif;
+        }
+
+      .mystyle {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+      .mystyle th,.mystyle td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Forecasting</h1>
+
+    <form method="post" enctype="multipart/form-data" action="/upload">
+        <input type="file" name="file">
+        <input type="submit" value="Upload and Predict">
+    </form>
+
+    {% if predictions %}
+        <h2>Predictions:</h2>
+        {{ predictions | safe }}
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red;">Error: {{ error }}</p>
+    {% endif %}
+</body>
+</html>

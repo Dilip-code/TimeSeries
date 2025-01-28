@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Data</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div>
+        <h1>Upload Your Data</h1>
+        <form action="/forecast" method="POST" enctype="multipart/form-data">
+            <label for="file">Choose CSV File</label>
+            <input type="file" name="file" id="file" required>
+
+            <label for="model">Select Model</label>
+            <select name="model" id="model" required>
+                <option value="prophet">Prophet</option>
+                <option value="sarima">SARIMAX</option>
+            </select>
+
+            <label for="periods">Forecast Periods</label>
+            <input type="number" name="periods" id="periods" value="12" required>
+
+            <button type="submit">Forecast</button>
+        </form>
+        <a href="/">Back to Home</a>
+    </div>
+</body>
+</html>

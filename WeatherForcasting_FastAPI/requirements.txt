@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pandas
+matplotlib
+plotly
+prophet
+jinja2
+aiofiles
+scikit-learn
