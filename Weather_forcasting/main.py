@@ -16,19 +16,14 @@ async def index(request: Request):
 async def upload_file(request: Request, file: UploadFile = File(...)):
     try:
         df = pd.read_csv(file.file)
-        # Preprocess the data (utils.py)
         df = preprocess_data(df)
 
-        # Train the model (model.py)
         model = train_model(df)
 
-        # Make predictions (model.py)
         predictions = predict_weather(model, df)
 
-        # Add predictions to the DataFrame
         df['predictions'] = predictions
 
-        # Render the predictions in the template
         return templates.TemplateResponse("index.html", {"request": request, "predictions": df.to_html(classes='mystyle')})
 
     except Exception as e:

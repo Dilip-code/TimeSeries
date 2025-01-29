@@ -7,13 +7,10 @@ from app.utils import process_file, make_prediction
 
 import os
 
-# Initialize FastAPI app
 app = FastAPI()
 
-# Mount static files for CSS
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
-# Templates for HTML
 templates = Jinja2Templates(directory="app/templates")
 
 @app.get("/", response_class=HTMLResponse)
@@ -25,14 +22,11 @@ async def home(request: Request):
 async def upload_file(request: Request, file: UploadFile = File(...)):
     """Handle file upload, prediction, and rendering results."""
     try:
-        # Read file and process
         contents = await file.read()
         df = process_file(contents)
 
-        # Generate prediction and plot
         plot_path, forecast = make_prediction(df)
 
-        # Render result template
         return templates.TemplateResponse(
             "result.html",
             {

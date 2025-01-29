@@ -22,19 +22,15 @@ async def upload_page():
 
 @app.post("/forecast")
 async def forecast(file: UploadFile, model: str = Form(...), periods: int = Form(...)):
-    # Save the uploaded file
     file_path = Path("data") / file.filename
     with open(file_path, "wb") as f:
         f.write(file.file.read())
 
-    # Load the data
     data = pd.read_csv(file_path)
 
-    # Validate data columns
     if not {"ds", "y"}.issubset(data.columns):
         return {"error": "Invalid file format. Ensure columns 'ds' and 'y' are present."}
 
-    # Forecast based on selected model
     if model == "prophet":
         forecast_df = prophet_forecast(data, periods)
     elif model == "sarima":
@@ -42,9 +38,7 @@ async def forecast(file: UploadFile, model: str = Form(...), periods: int = Form
     else:
         return {"error": "Invalid model selection."}
 
-    # Debugging: Print forecast data to ensure it's being passed correctly
-    print(forecast_df.head())  # Check the forecast data
+    print(forecast_df.head()) 
 
-    # Render the results in the HTML template
     return templates.TemplateResponse("results.html", {"request": {}, "data": forecast_df.to_dict(orient="records")})
 
